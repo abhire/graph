@@ -22,8 +22,8 @@ public:
 
 	void addEdge(int u, int v);
 
-	bool isdfsCycle(int v, std::vector<int> &visited, std::vector<int> &parent, std::vector<int> &cycle, int &cycleno);
-	bool printCycle(std::vector<int> &cycle);
+	bool isdfsCycle(int v, std::vector<int> &visited, std::vector<int> &parent, std::vector< std::vector<int> > &cycle, int &cycleno);
+	bool printCycle(std::vector<std::vector < int> > &cycle);
 	bool dfsCycleUtil();
 
 };

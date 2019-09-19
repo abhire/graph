@@ -15,7 +15,7 @@ void graph::addEdge(int u, int v)
 		adjList[v].push_back(u);
 }
 
-bool graph::isdfsCycle(int v, std::vector<int>& visited, std::vector<int> &parent, std::vector<int> &cycle, int &cyclelNo)
+bool graph::isdfsCycle(int v, std::vector<int>& visited, std::vector<int> &parent, std::vector<std::vector <int> > &cycle, int &cyclelNo)
 {
 	visited[v] = GREY;
 
@@ -36,10 +36,11 @@ bool graph::isdfsCycle(int v, std::vector<int>& visited, std::vector<int> &paren
 			int curr = v;
 			int end = adjList[v][i];
 			
-			cycle[end] = cyclelNo;
+			cycle[cyclelNo].push_back(end);
+			
 			while (curr != end)
 			{
-				cycle[curr] = cyclelNo;
+				cycle[cyclelNo].push_back(curr);
 				curr = parent[curr];
 			}
 		}
@@ -48,21 +49,13 @@ bool graph::isdfsCycle(int v, std::vector<int>& visited, std::vector<int> &paren
 	visited[v] = BLACK;
 	return false;
 }
-bool graph::printCycle(std::vector<int> &cycle)
+bool graph::printCycle(std::vector<std::vector <int> > &CycleMap)
 {
 	cout << "================detecting  cycle ================" << endl;
 	
 	int count = 0;
 	bool found = false;
-	std::vector<vector<int>> CycleMap (_size);
 	
-	for (int i = 0; i < _size; i++)
-	{
-		if (cycle[i] > 0)
-		{
-			CycleMap[cycle[i]].push_back(i);
-		}
-	}
 	for (int i = 0; i < _size; i++)
 	{
 		if (CycleMap[i].size())
@@ -92,8 +85,8 @@ bool graph::dfsCycleUtil()
 
 	std::vector<int> visited(_size, WHITE);
 
-	std::vector<int> cycle(_size, 0);
-	int cycleno =0;
+	std::vector<std::vector< int>>  cycle(_size); // maximum cycles can be lesser than size
+	int cycleno =-1;
 
 	for (int i = 0; i < _size; i++)
 	{
